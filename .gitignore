@@ -1,0 +1,77 @@
+# Top-level .gitignore for the dual-track I3C-EX / I4C repository.
+# Per-package gitignores (e.g., i3cex/.gitignore) handle package-specific
+# patterns. This file covers patterns that apply repo-wide.
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Hatch
+.hatch/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Testing / coverage
+.pytest_cache/
+.hypothesis/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Type checkers and linters
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+
+# ---------------------------------------------------------------------------
+# IDEs and editors
+# ---------------------------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+
+# ---------------------------------------------------------------------------
+# OS
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------------------------------------------------------------------------
+# Hardware / simulation artefacts (future)
+# ---------------------------------------------------------------------------
+# Verilator / cocotb build outputs and waveform traces
+sim_build/
+results.xml
+*.vcd
+*.fst
+*.ghw
+
+# ---------------------------------------------------------------------------
+# Secrets and local config
+# ---------------------------------------------------------------------------
+.env.local
+*.key
+*.pem
+secrets.yaml
