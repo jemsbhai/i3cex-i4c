@@ -171,7 +171,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   filtered to run only on changes under `i3cex/**` or the workflow
   itself). Quality, cross-OS test matrix (Linux/Windows/macOS x
   Python 3.11/3.12/3.13), cosim (gated placeholder), and build
-  jobs.
+  jobs. Checkout, Python setup, coverage upload, and artefact upload use
+  their Node.js 24-backed v6 action releases.
 
 #### i4c package placeholder (Track 2)
 
