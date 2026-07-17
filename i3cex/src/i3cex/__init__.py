@@ -24,7 +24,7 @@ specification.
 
 from __future__ import annotations
 
-__version__ = "0.1.0.dev0"
+__version__ = "0.1.0.dev1"
 """Package version.
 
 Exported at the package root so Hatch can read it via

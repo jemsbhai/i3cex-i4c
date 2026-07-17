@@ -50,6 +50,7 @@ cosim = [
     "cocotb-test>=0.2.4",
 ]
 dev = [
+    "build>=1.2",
     "pytest>=8.3",
     "pytest-cov>=6.0",
     "pytest-xdist>=3.6",
@@ -57,6 +58,7 @@ dev = [
     "ruff>=0.8",
     "mypy>=1.13",
     "pre-commit>=4.0",
+    "twine>=6.0",
 ]
 docs = [
     "mkdocs>=1.6",
@@ -81,6 +83,8 @@ include = [
     "src/i3cex",
     "tests",
     "scripts",
+    "release",
+    "docs/release",
     "README.md",
     "LICENSE",
     "CHANGELOG.md",
@@ -124,12 +128,19 @@ fix = [
 # Strict type checking.
 typecheck = "mypy --strict src tests scripts"
 
+# Validate and summarize the evidence-backed release gate manifest. Add
+# ``--require dev|rc|production`` to enforce a milestone; blocked milestones
+# intentionally return a non-zero status.
+release-status = "python scripts/check_release_readiness.py {args}"
+release-artifacts = "python scripts/validate_release_artifacts.py {args}"
+
 # Everything: lint + typecheck + full non-cosim test run with coverage.
 check = [
     "ruff check src tests scripts",
     "ruff format --check src tests scripts",
     "mypy --strict src tests scripts",
     "python scripts/run_pytest.py --markers \"not cosim\" --cov-report=term-missing",
+    "python scripts/check_release_readiness.py",
 ]
 
 # Cosim environment: Linux/WSL2 only. Requires Verilator, Icarus, Verible.

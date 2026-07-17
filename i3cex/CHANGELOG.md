@@ -10,8 +10,18 @@ bump the `MINOR` component.
 
 ## [Unreleased]
 
+## [0.1.0.dev1] - 2026-07-17
+
 ### Added
 
+- Evidence-backed hardware and production release plan with an explicit
+  reference-board matrix, staged `dev`/`rc`/production gates, recovery and
+  rollback criteria, and a machine-readable NO-GO verdict.
+- Typed release-manifest validator and `hatch run release-status` command;
+  CI now rejects invalid or contradictory readiness records.
+- Deterministic artifact validator for repeated wheel/sdist builds, strict
+  Twine metadata checks, content audits, and isolated install smoke tests;
+  the CI build job now uses the same release gate.
 - ADR-0020: Throughput impact uses exact wire goodput, complete encoder
   and decoder capacity on the pinned Cortex-M0 target, and sustained
   lossless pipeline replay with explicit bottleneck attribution.

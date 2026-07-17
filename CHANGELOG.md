@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 #### Repository foundation
 
+- Hardware and production release readiness is governed by an executable
+  `i3cex/docs/release/RELEASE_PLAN.md`, a compatible STM32 reference-board
+  matrix, and machine-checked evidence gates that cannot report GO while a
+  required gate or hardware item remains unvalidated.
 - Top-level `README.md` describing the dual-track strategy (I3C-EX
   extension layer + I4C clean-redesign), motivation, and layout.
 - Top-level `LICENSE` (MIT).
