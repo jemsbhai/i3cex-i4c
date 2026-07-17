@@ -68,17 +68,21 @@
     {
       "id": "G01",
       "name": "Host reference quality gate",
-      "status": "pending",
+      "status": "passed",
       "required_for": ["dev", "rc", "production"],
-      "evidence": [],
+      "evidence": [
+        "https://github.com/jemsbhai/i3cex-i4c/actions/runs/29614745610"
+      ],
       "blockers": []
     },
     {
       "id": "G02",
       "name": "Reproducible development artifacts and isolated install smoke tests",
-      "status": "pending",
+      "status": "passed",
       "required_for": ["dev", "rc", "production"],
-      "evidence": [],
+      "evidence": [
+        "https://github.com/jemsbhai/i3cex-i4c/actions/runs/29614745610"
+      ],
       "blockers": []
     },
     {

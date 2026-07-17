@@ -56,10 +56,10 @@ def test_repository_manifest_reports_truthful_blockers() -> None:
     assert report.version_for("dev") == "0.1.0.dev1"
     assert report.version_for("rc") == "0.1.0rc1"
     assert report.version_for("production") == "1.0.0"
-    assert [gate.id for gate in report.blocking_gates("dev")] == ["G01", "G02"]
+    assert report.blocking_gates("dev") == ()
     assert "G03" in {gate.id for gate in report.blocking_gates("rc")}
     assert "programmable-i3c-pair" in {item.id for item in report.blocking_hardware("rc")}
-    assert not report.is_ready("dev")
+    assert report.is_ready("dev")
     assert not report.is_ready("rc")
     assert not report.is_ready("production")
 

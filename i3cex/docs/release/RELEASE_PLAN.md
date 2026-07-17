@@ -386,7 +386,10 @@ silently replaced.
 As of 2026-07-17:
 
 - G00 is implemented.
-- G01 and G02 are being executed for the `0.1.0.dev1` milestone.
+- G01 and G02 passed for the `0.1.0.dev1` milestone in
+  [hosted run 29614745610](https://github.com/jemsbhai/i3cex-i4c/actions/runs/29614745610).
+  The development preview is ready; this does not change the hardware or
+  production verdict.
 - G03-G10 are blocked by implementation, tool, or hardware prerequisites.
 - The host has Ubuntu 24.04 WSL but lacks the pinned RTL tools.
 - No ST-LINK/I3C board is connected, and the Arm GNU 13.3.Rel1/ST flashing
