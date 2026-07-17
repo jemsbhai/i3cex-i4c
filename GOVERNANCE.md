@@ -436,6 +436,20 @@ maximum cannot prove an absolute timing bound. Target timing, shared
 stress inputs, frozen interference traces, and explicit claim vocabulary
 produce auditable evidence without overstating it. See ADR-0019.
 
+### 2026-07-17: Throughput-impact measurement
+
+**Decision**: Measure axis 6 through linked but separate wire-capacity,
+complete encoder/decoder endpoint-capacity, and sustained lossless
+combined-goodput views. Use C on the pinned Cortex-M0 profile for the
+embedded classification, retain Python separately, and identify the
+limiting stage for every workload stratum.
+
+**Rationale**: Payload-efficiency ratios alone duplicate wire overhead,
+while isolated operations per second omit transport and can reward
+incomplete work. Exact physical traces, complete target operations, and
+bounded drop-free pipeline replay measure useful application delivery
+without hiding bottleneck or workload reversals. See ADR-0020.
+
 ## Publication Ethics
 
 - All work is pre-registered via specification drafts in `specs/`

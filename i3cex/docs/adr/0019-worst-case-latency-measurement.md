@@ -575,6 +575,9 @@ runnable from the published artefact.
   — parser path and structural inventory feeding the stress corpus.
 - [`./0018-legacy-safety-measurement.md`](./0018-legacy-safety-measurement.md)
   — rejection classes, recovery prefixes, and safety admissibility.
+- [`./0020-throughput-impact-measurement.md`](./0020-throughput-impact-measurement.md)
+  — sustained endpoint and combined-pipeline throughput using this
+  ADR's frozen target and load profiles.
 - `../../../specs/I3CEX-0.1.0-draft.md` section 5.3 — worst-case
   latency comparison criterion.
 - [ST NUCLEO-F072RB product page](https://www.st.com/en/evaluation-tools/nucleo-f072rb.html)

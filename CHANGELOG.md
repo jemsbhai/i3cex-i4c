@@ -39,7 +39,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
     framing-neutral extensibility taxonomy, coverage strategy, and
     per-scenario measurement contract, plus complete-encoding wire-
     overhead, complete-decoder parse-complexity, zero-tolerance legacy-
-    safety, and target-cycle worst-case-latency methodologies.
+    safety, target-cycle worst-case-latency, and sustainable throughput-
+    impact methodologies.
 
 #### Specifications
 
@@ -78,6 +79,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Section 5.3's worst-case-latency criterion now follows ADR-0019's
     pinned Cortex-M0 intrinsic-cycle and deterministic loaded-response
     methodology, with empirical bounds distinguished from proven WCET.
+  - Section 5.3's throughput-impact criterion now follows ADR-0020's
+    exact wire, complete endpoint, and sustainable lossless combined-
+    goodput methodology with explicit bottleneck attribution.
   - Section 6 sublayer skeletons now include placeholder Overhead
     Analysis subsections per the Efficiency Principle.
   - Appendix A expanded with TLV wire examples A.5 through A.8
@@ -159,6 +163,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - ADR-0019: Worst-case latency measurement using a pinned Cortex-M0
     target, shared slow-path search, deterministic interference-phase
     sweeps, and separate Python evidence.
+  - ADR-0020: Throughput-impact measurement using exact physical traces,
+    complete Cortex-M0 encoder/decoder capacity, bounded lossless
+    pipeline replay, and separate Python evidence.
   - ADR `README.md` index and `TEMPLATE.md`.
 - CI: `.github/workflows/ci.yml` at the repo root (workflow path-
   filtered to run only on changes under `i3cex/**` or the workflow

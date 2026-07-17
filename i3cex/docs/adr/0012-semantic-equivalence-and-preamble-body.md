@@ -258,5 +258,7 @@ preamble-header-only versus full-TLV comparison.
   — six-axis methodology framework.
 - [`./0011-python-c-runtime-evidence.md`](./0011-python-c-runtime-evidence.md)
   — separate Python and C evidence streams and differential conformance.
+- [`./0020-throughput-impact-measurement.md`](./0020-throughput-impact-measurement.md)
+  — complete encoder/decoder boundaries and canonical payload goodput.
 - `../../../specs/I3CEX-0.1.0-draft.md` sections 5 and 6 — framing and
   sublayer contracts updated by this decision.

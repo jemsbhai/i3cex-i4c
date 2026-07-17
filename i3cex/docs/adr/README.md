@@ -57,3 +57,4 @@ it in. Commit it in the same PR as the change it documents.
 | [0017](./0017-parse-complexity-measurement.md) | Parse-complexity measurement | Accepted |
 | [0018](./0018-legacy-safety-measurement.md) | Legacy-safety measurement | Accepted |
 | [0019](./0019-worst-case-latency-measurement.md) | Worst-case latency measurement | Accepted |
+| [0020](./0020-throughput-impact-measurement.md) | Throughput-impact measurement | Accepted |

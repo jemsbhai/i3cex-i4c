@@ -135,7 +135,8 @@ I3C-EX sublayers are implemented sequentially:
 Framing strategy (preamble-byte vs TLV) is chosen empirically before
 EX-1 stabilises; see
 [I3CEX-0.1.0-draft.md](https://github.com/jemsbhai/i3cex-i4c/blob/main/specs/I3CEX-0.1.0-draft.md)
-section 5.
+section 5. The complete six-axis evaluation methodology is pre-registered
+in ADR-0010 through ADR-0020 under `docs/adr/`.
 
 ## License
 

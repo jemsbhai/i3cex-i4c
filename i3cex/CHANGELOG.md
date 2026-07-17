@@ -10,6 +10,14 @@ bump the `MINOR` component.
 
 ## [Unreleased]
 
+### Added
+
+- ADR-0020: Throughput impact uses exact wire goodput, complete encoder
+  and decoder capacity on the pinned Cortex-M0 target, and sustained
+  lossless pipeline replay with explicit bottleneck attribution.
+- ADR index and specification references updated to complete the
+  pre-registered six-axis bakeoff methodology set.
+
 ## [0.1.0.dev0] - 2026-07-17
 
 ### Added

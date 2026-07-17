@@ -148,7 +148,8 @@ dedicated ADRs:
   [`ADR-0018`](./0018-legacy-safety-measurement.md).
 - Axis 5 (worst-case latency impact): documented in
   [`ADR-0019`](./0019-worst-case-latency-measurement.md).
-- Axis 6 (throughput impact): documented in a forthcoming ADR.
+- Axis 6 (throughput impact): documented in
+  [`ADR-0020`](./0020-throughput-impact-measurement.md).
 
 Cross-cutting rules that apply across multiple axes are documented in
 their own ADRs. The first two are:
@@ -197,3 +198,6 @@ justification; they are not accepted as self-evident.
   — axis 4 oracle-driven malformed-input and recovery methodology.
 - [`./0019-worst-case-latency-measurement.md`](./0019-worst-case-latency-measurement.md)
   — axis 5 intrinsic-cycle and loaded-response methodology.
+- [`./0020-throughput-impact-measurement.md`](./0020-throughput-impact-measurement.md)
+  — axis 6 wire, endpoint, and sustainable combined-goodput
+  methodology.
