@@ -65,10 +65,10 @@ docs = [
 ]
 
 [project.urls]
-Repository = "https://github.com/USER/i3cex"  # TODO: update when published
-Specification = "https://github.com/USER/i3cex/tree/main/../specs"
-Issues = "https://github.com/USER/i3cex/issues"
-Changelog = "https://github.com/USER/i3cex/blob/main/CHANGELOG.md"
+Repository = "https://github.com/jemsbhai/i3cex-i4c"
+Specification = "https://github.com/jemsbhai/i3cex-i4c/blob/main/specs/I3CEX-0.1.0-draft.md"
+Issues = "https://github.com/jemsbhai/i3cex-i4c/issues"
+Changelog = "https://github.com/jemsbhai/i3cex-i4c/blob/main/i3cex/CHANGELOG.md"
 
 [tool.hatch.version]
 path = "src/i3cex/__init__.py"

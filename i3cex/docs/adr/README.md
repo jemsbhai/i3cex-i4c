@@ -47,3 +47,13 @@ it in. Commit it in the same PR as the change it documents.
 | [0007](./0007-tlv-nesting-deferred.md) | TLV nesting deferred, Type 0xFE reserved for future container semantics | Accepted |
 | [0008](./0008-tlv-max-block-size.md) | TLV maximum block size — negotiated with 4096-byte default | Accepted |
 | [0009](./0009-efficiency-principle.md) | Efficiency Principle — every feature must offset its cost | Accepted |
+| [0010](./0010-bakeoff-evaluation-methodology.md) | Bakeoff evaluation methodology | Accepted |
+| [0011](./0011-python-c-runtime-evidence.md) | Python-plus-C side-by-side runtime evidence | Accepted |
+| [0012](./0012-semantic-equivalence-and-preamble-body.md) | Semantic equivalence and Candidate A body contract | Accepted |
+| [0013](./0013-extensibility-scenario-taxonomy.md) | Extensibility scenario taxonomy | Accepted |
+| [0014](./0014-extensibility-coverage-strategy.md) | Extensibility scenario coverage strategy | Accepted |
+| [0015](./0015-extensibility-per-scenario-measurements.md) | Extensibility per-scenario measurement set | Accepted |
+| [0016](./0016-wire-overhead-measurement.md) | Wire-overhead measurement | Accepted |
+| [0017](./0017-parse-complexity-measurement.md) | Parse-complexity measurement | Accepted |
+| [0018](./0018-legacy-safety-measurement.md) | Legacy-safety measurement | Accepted |
+| [0019](./0019-worst-case-latency-measurement.md) | Worst-case latency measurement | Accepted |

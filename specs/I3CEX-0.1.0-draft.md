@@ -127,11 +127,11 @@ I3C-EX is a **layered extension** above I3C SDR mode frames. Every I3C-EX
 transaction is, at the wire level, a valid I3C transaction. Extension
 metadata is carried in one of two ways:
 
-1. **Preamble-byte framing**: A single reserved byte precedes the I3C
-   payload, signalling extension presence and encoding a compact header.
+1. **Preamble-byte framing**: A single reserved byte begins an extension
+   block, signalling extension presence and encoding a compact header;
+   active sublayer sections follow in canonical order.
 2. **TLV framing**: Extension data is encoded as Type-Length-Value
-   records appended to or embedded within the I3C payload per a
-   negotiated schema.
+   records within an extension block per a negotiated schema.
 
 Both framing strategies are being prototyped. The specification will
 standardise one based on empirical comparison. See Section 5.
@@ -182,11 +182,12 @@ comparison criteria.
 
 ### 5.1 Preamble-Byte Framing (Candidate A)
 
-A single-byte preamble immediately precedes the I3C payload. The v0.1
+A single-byte preamble begins the Candidate A extension block. The v0.1
 wire format corresponds to "Option A" in ADR-0005: a compact,
 level-monotonic encoding with reserved bits that preserve a forward-
 compatibility path to bitmap (Option B) and table (Option C) forms in
-future specification versions.
+future specification versions. Sublayer sections follow the preamble
+as defined in Section 5.1.5.
 
 #### 5.1.1 Bit layout
 
@@ -243,23 +244,55 @@ MAY:
 See ADR-0005 for the migration strategy to Option B (two-byte bitmap)
 and Option C (table-indexed) forms.
 
-#### 5.1.5 Trade-offs (informative)
+#### 5.1.5 Extension-body contract
+
+For a preamble declaring capability level `N`, Candidate A's extension
+block has this logical layout:
+
+```text
+Preamble(N) || Section(EX-1) || Section(EX-2) || ... || Section(EX-N)
+```
+
+The following rules apply in v0.1:
+
+1. Level EX-0 carries no sublayer sections.
+2. For level `N > 0`, exactly one section for each sublayer EX-1 through
+   EX-N MUST appear in ascending numeric order.
+3. Each section's grammar and any record-subtype signalling are defined
+   by the owning sublayer specification in Section 6.
+4. Every section boundary MUST be determinable from in-band bytes and
+   the negotiated sublayer schema. A section MAY be fixed-width or MAY
+   carry an internal length, count, or other self-delimiting structure.
+5. A non-final section MUST NOT consume an unspecified remainder of the
+   extension block. Decoders MUST NOT depend on an out-of-band section
+   length unavailable to the peer.
+6. All section-internal delimiter, length, count, subtype, padding, and
+   required default-value bytes count toward Candidate A's wire and
+   parse cost.
+
+The preamble header alone is not a complete Candidate A representation
+when `N > 0`. A complete decoder parses the preamble and every active
+section needed to recover the framing-independent semantic transaction
+defined in Section 5.3.1. See ADR-0012.
+
+#### 5.1.6 Trade-offs (informative)
 
 Preamble framing:
 
-- **Advantages**: minimum wire overhead (1 byte per transaction);
-  trivial to parse; stateless; matches the level-monotonic sublayer
-  model.
+- **Advantages**: minimum framing-header overhead (1 byte per
+  transaction); trivial header parsing; stateless header; matches the
+  level-monotonic sublayer model.
 - **Disadvantages**: cannot express sparse sublayer sets; only 7
   capability levels addressable (one slot currently unused); finite
-  reserved-bit budget for future evolution.
+  reserved-bit budget for future evolution; section boundaries and
+  subtype signalling must be supplied by sublayer grammars.
 
 ### 5.2 TLV Framing (Candidate B)
 
 Extension data is encoded as a sequence of Type-Length-Value records
-(TLV records) concatenated end-to-end within the I3C payload to form
-a TLV block. The v0.1 wire format is defined in ADR-0006 (length
-encoding), ADR-0007 (nesting policy), and ADR-0008 (max block size).
+(TLV records) concatenated end-to-end to form the Candidate B extension
+block. The v0.1 wire format is defined in ADR-0006 (length encoding),
+ADR-0007 (nesting policy), and ADR-0008 (max block size).
 
 #### 5.2.1 Record layout
 
@@ -431,17 +464,56 @@ TLV framing:
 The following criteria will be measured in the reference implementation
 and reported in Paper 1:
 
-1. **Wire overhead**: Bytes added per transaction for EX-1 through EX-6.
-2. **Parse complexity**: Cyclomatic complexity of the receiver decoder.
-3. **Extensibility**: Effort to add a new sublayer or record type.
-4. **Legacy safety**: Behaviour when an EX-aware device receives
-   malformed EX data from a misbehaving peer.
-5. **Worst-case latency impact**: Additional decode time under load.
+1. **Wire overhead**: Complete encoded extension octets added per
+   transaction for EX-1 through EX-6, measured per ADR-0016 with
+   negotiation and physical-transport effects reported separately.
+2. **Parse complexity**: Complete-receiver cyclomatic and structural
+   parser complexity measured per ADR-0017, with C and Python reported
+   separately.
+3. **Extensibility**: Effort to accommodate the framing-independent
+   semantic scenario families in ADR-0013, including new fields, record
+   kinds, sublayers, composition rules, and representation boundaries.
+   Confirmatory scenario selection follows ADR-0014; per-scenario
+   measurement and reporting follow ADR-0015.
+4. **Legacy safety**: Oracle-labelled malformed-input, state-recovery,
+   valid-unknown, and negotiation-gate behaviour measured per ADR-0018
+   in both C and Python.
+5. **Worst-case latency impact**: Complete-decoder intrinsic service
+   cycles and loaded response cycles measured per ADR-0019 on the pinned
+   Cortex-M0 target, with finite observed bounds distinguished from
+   formally proven WCET and Python reported separately.
 6. **Throughput impact**: Effective payload bandwidth given envelope
    overhead.
 
 Both strategies will be implemented; the loser will be documented in
 an ADR and in Paper 1 as a negative result.
+
+#### 5.3.1 Semantic-equivalence requirement
+
+Every bakeoff workload MUST originate from a versioned,
+framing-independent semantic transaction. Both candidate encoders
+receive the same semantic input, and every successful complete decoder
+MUST reconstruct the same canonical meaning. Candidate wire bytes are
+expected to differ.
+
+The canonical transaction records active sublayers, semantic records
+and fields, required negotiation state, expected success or rejection,
+and the opaque application-payload length (and bytes when relevant).
+Application bytes are workload input, not extension metadata delivered
+by either candidate.
+
+Paired performance comparisons use a **comparable core corpus** that
+both candidates can represent. Because Candidate A is level-monotonic,
+that corpus uses active-sublayer prefixes from EX-0 through EX-6.
+Evolution scenarios that one candidate cannot encode remain in a
+separate **extensibility stress corpus** and are recorded as
+`UNREPRESENTABLE`; they MUST NOT be silently omitted or replaced with
+different semantics.
+
+A header-only Candidate A decode is not comparable to a full TLV-block
+decode. Timed and static-analysis paths MUST perform enough sublayer
+parsing to recover the same canonical transaction. ADR-0012 defines the
+full equivalence, admissibility, and cost-boundary rules.
 
 ---
 
@@ -450,6 +522,17 @@ an ADR and in Paper 1 as a negative result.
 Every sublayer specification MUST include an **Overhead Analysis**
 subsection per the Efficiency Principle (see `../GOVERNANCE.md` and
 ADR-0009) before progressing beyond `-draft` status.
+
+Before a sublayer is included in the framing bakeoff's comparable core
+corpus, its specification MUST also define:
+
+- A framing-independent semantic schema.
+- Its Candidate A section grammar and deterministic boundary.
+- Its Candidate B Type/Value mapping.
+- Canonical equality and rejection rules for cross-candidate testing.
+
+These requirements follow ADR-0012 and prevent the framing candidates
+from being measured at different parser depths.
 
 ### 6.1 Metadata Envelope (EX-1) — Primary Focus of v0.1.0
 
@@ -676,6 +759,19 @@ Bytes: 0x00 0x80 ...
 Further examples (EX-3 fusion with disagreement, EX-4 cross-bus
 timestamp correlation) are `[TBD]`.
 
+### A.9 Candidate A canonical section order
+
+A Candidate A block declaring EX-3 has one section for every active
+sublayer, in ascending order:
+
+```text
+0xB0 || EX-1 section || EX-2 section || EX-3 section
+```
+
+The exact section bytes remain `[TBD]` in the corresponding Section 6
+sublayer specifications. Omitting EX-2 while retaining EX-3 is not a
+valid Candidate A v0.1 representation.
+
 ---
 
 ## Appendix B: Open questions tracker
@@ -703,6 +799,10 @@ from this list.
 - ~~Maximum TLV block size.~~ See ADR-0008 and Section 5.2.3.
   Device-negotiated, default 4096 bytes, no minimum floor,
   advertised in EX-Discovery CCC response.
+- ~~Cross-candidate semantic equivalence and Candidate A section
+  ordering.~~ See ADR-0012 and Sections 5.1.5 and 5.3.1. Candidate A
+  carries one section per active level in ascending order; bakeoff
+  candidates must reconstruct the same canonical semantic transaction.
 
 ---
 

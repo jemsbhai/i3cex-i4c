@@ -2,9 +2,10 @@
 
 Extension layers for MIPI I3C targeting edge AI and edge ML workloads.
 
-> **Pre-alpha**. Specification and implementation are in flux. Not yet
-> published to PyPI. See [`../specs/I3CEX-0.1.0-draft.md`](../specs/I3CEX-0.1.0-draft.md)
-> for the current specification draft.
+> **Pre-alpha**. Specification and implementation are in flux.
+> Developmental releases are available on
+> [PyPI](https://pypi.org/project/i3cex/). See the
+> [current specification draft](https://github.com/jemsbhai/i3cex-i4c/blob/main/specs/I3CEX-0.1.0-draft.md).
 
 ## What is I3C-EX?
 
@@ -14,17 +15,19 @@ signalling, distributed timestamping, provenance/attestation, and
 confidence propagation — all as optional sublayers that run on existing
 I3C hardware with firmware updates only.
 
-See the top-level [`../README.md`](../README.md) for project motivation
-and dual-track strategy, and [`../GOVERNANCE.md`](../GOVERNANCE.md) for
-development standards.
+See the repository's
+[top-level README](https://github.com/jemsbhai/i3cex-i4c/blob/main/README.md)
+for project motivation and dual-track strategy, and
+[GOVERNANCE.md](https://github.com/jemsbhai/i3cex-i4c/blob/main/GOVERNANCE.md)
+for development standards.
 
-## Installation (once published)
+## Installation
 
 ```bash
-pip install i3cex                   # core library
-pip install "i3cex[sim]"            # with pure-Python simulator extras
-pip install "i3cex[cosim]"          # with cocotb cosimulation (Linux/WSL2)
-pip install "i3cex[dev]"            # development tooling
+pip install --pre i3cex                   # core library
+pip install --pre "i3cex[sim]"            # with pure-Python simulator extras
+pip install --pre "i3cex[cosim]"          # with cocotb cosimulation (Linux/WSL2)
+pip install --pre "i3cex[dev]"            # development tooling
 ```
 
 ## Development
@@ -77,7 +80,7 @@ i3cex/
 │       ├── py.typed            PEP 561 marker
 │       ├── framing/            Wire-level framing strategies
 │       │   ├── __init__.py
-│       │   ├── preamble.py     Candidate A: preamble-byte framing
+│       │   ├── preamble.py     Candidate A: preamble header codec
 │       │   └── tlv.py          Candidate B: TLV framing
 │       ├── envelope/           EX-1: metadata envelope sublayer
 │       │   └── __init__.py
@@ -105,7 +108,9 @@ i3cex/
 
 ## Testing Philosophy
 
-See [`../GOVERNANCE.md`](../GOVERNANCE.md) for the full statement. Summary:
+See
+[GOVERNANCE.md](https://github.com/jemsbhai/i3cex-i4c/blob/main/GOVERNANCE.md)
+for the full statement. Summary:
 
 - **Strict TDD.** No implementation code lands without a failing test first.
 - **Four test layers.** Unit, property, integration, cosim.
@@ -128,9 +133,11 @@ I3C-EX sublayers are implemented sequentially:
 6. **EX-6 confidence propagation** — after EX-5.
 
 Framing strategy (preamble-byte vs TLV) is chosen empirically before
-EX-1 stabilises; see [`../specs/I3CEX-0.1.0-draft.md`](../specs/I3CEX-0.1.0-draft.md)
+EX-1 stabilises; see
+[I3CEX-0.1.0-draft.md](https://github.com/jemsbhai/i3cex-i4c/blob/main/specs/I3CEX-0.1.0-draft.md)
 section 5.
 
 ## License
 
-MIT. See [`LICENSE`](./LICENSE).
+MIT. See the
+[license](https://github.com/jemsbhai/i3cex-i4c/blob/main/i3cex/LICENSE).

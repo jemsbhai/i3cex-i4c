@@ -308,6 +308,134 @@ and an explicit trade-off statement.
 establishes a publishable position on principled extension-layer
 design for Paper 1. See ADR-0009.
 
+### 2026-04-24: Bakeoff evaluation methodology
+
+**Decision**: Evaluate both framing strategies across all six criteria
+in specification section 5.3. Pre-register cross-cutting and per-axis
+methodology in focused ADRs before collecting selection evidence.
+
+**Rationale**: Full, pre-registered coverage makes Paper 1's framing
+selection auditable and prevents post-hoc metric choice. See ADR-0010.
+
+### 2026-07-17: Python-plus-C runtime evidence
+
+**Decision**: Measure the Python and C framing implementations side by
+side for runtime axes, report them as separate evidence streams, and
+use C-on-Cortex-M0 measurements as primary for embedded-runtime claims.
+Do not pool or average results across languages.
+
+**Rationale**: C provides target-valid embedded evidence while Python
+represents the maintained reference package. Separate reporting avoids
+meaningless aggregation and preserves cross-environment disagreement as
+a result. See ADR-0011.
+
+### 2026-07-17: Cross-candidate semantic equivalence
+
+**Decision**: Define bakeoff workloads in a canonical,
+framing-independent semantic model. Require both candidates to recover
+the same meaning through complete adapters. Candidate A carries exactly
+one section for every active sublayer in ascending EX order, with
+schema-defined in-band boundaries.
+
+**Rationale**: The preamble header decoder and full TLV-block decoder do
+not currently perform equivalent work. A canonical model and complete
+adapter boundary prevent header-only timing from biasing the bakeoff and
+turn unrepresentable evolution scenarios into explicit evidence. See
+ADR-0012.
+
+### 2026-07-17: Extensibility scenario taxonomy
+
+**Decision**: Classify framing-extensibility scenarios by one primary
+semantic family—field, record, cardinality, size, sublayer,
+composition, relationship, or representation space—and tag
+compatibility, boundary pressure, negotiation allowance, and evolution
+budget separately.
+
+**Rationale**: Candidate-specific mechanisms would present different
+questions to preamble and TLV framing. A faceted semantic taxonomy gives
+both candidates identical extension requests while preserving the
+source of any representability failure. See ADR-0013.
+
+### 2026-07-17: Extensibility scenario coverage
+
+**Decision**: Build the confirmatory extensibility portfolio from two
+anchors per semantic family, shared sweeps around both candidates'
+documented boundaries, the union of their documented extension paths,
+and complete feasible pairwise coverage across compatibility, evolution
+budget, and negotiation. Freeze confirmatory scenarios separately from
+later exploratory additions.
+
+**Rationale**: The hybrid design provides auditable family depth, edge
+coverage, and facet interactions without an infeasible Cartesian
+product. Union inventories and frozen shared scenarios prevent
+candidate-specific cherry-picking. See ADR-0014.
+
+### 2026-07-17: Extensibility per-scenario measurements
+
+**Decision**: Measure each confirmatory extensibility scenario with a
+quality-gated bundle covering representability, compatibility,
+normative-specification and wire-grammar changes, separate Python and C
+production/validation churn, static complexity, state and negotiation
+requirements, wire context, and implementation provenance. Do not
+compute a weighted extensibility score.
+
+**Rationale**: No single proxy captures extension effort. A
+multidimensional standalone-patch record exposes categorical failures
+and engineering burden without pooling languages or turning
+unrepresentable cases into artificial numeric values. See ADR-0015.
+
+### 2026-07-17: Wire-overhead measurement
+
+**Decision**: Measure wire overhead from actual complete encoded
+extension blocks for equal canonical semantics. Count every extension
+octet; report one-time negotiation, fragmentation, application-payload
+efficiency, and physical bus expansion as separate views. Use stratified
+deterministic corpus results rather than header-only formulas or
+population significance tests.
+
+**Rationale**: Comparing a one-byte preamble with a two-byte TLV header
+would charge the candidates for different parser and representation
+depths. Complete encoder outputs provide exact, auditable totals while
+preserving the source of overhead. See ADR-0016.
+
+### 2026-07-17: Parse-complexity measurement
+
+**Decision**: Measure complete semantic receiver adapters using
+cyclomatic and decision-surplus metrics plus an audited structural
+inventory of dispatch, validation, parser state, transitions, lookahead,
+buffering, and parse passes. Analyse C and Python separately, with C
+primary for embedded-complexity claims.
+
+**Rationale**: Header-only functions perform unequal work, while
+cyclomatic complexity alone can hide function-splitting and table-driven
+state. The combined method preserves the specified metric and exposes
+its major blind spots. See ADR-0017.
+
+### 2026-07-17: Legacy-safety measurement
+
+**Decision**: Evaluate legacy safety with an independent oracle, layered
+deterministic and generated corpora, state-recovery and negotiation-gate
+sequences, exhaustive 0-2-byte inputs, sanitised C fuzzing, and
+zero-tolerance critical/major severity gates in both C and Python.
+
+**Rationale**: Explicit rejection alone does not prove safety if a
+decoder emits partial semantics, corrupts later state, misroutes legacy
+traffic, or violates memory/resource bounds. Threshold conformance avoids
+ranking candidates by arbitrary corpus failure rates. See ADR-0018.
+
+### 2026-07-17: Worst-case latency measurement
+
+**Decision**: Measure complete semantic decoders using intrinsic service
+cycles and deterministic loaded-response phase sweeps on a pinned
+Cortex-M0 target. Search slow paths symmetrically, keep Python as a
+separate secondary endpoint, and report finite experimental bounds
+rather than labelling sampled maxima as proven WCET.
+
+**Rationale**: Means hide tail behaviour, while an ad-hoc observed
+maximum cannot prove an absolute timing bound. Target timing, shared
+stress inputs, frozen interference traces, and explicit claim vocabulary
+produce auditable evidence without overstating it. See ADR-0019.
+
 ## Publication Ethics
 
 - All work is pre-registered via specification drafts in `specs/`
