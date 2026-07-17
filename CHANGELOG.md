@@ -33,7 +33,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - Decision log with entries for dual-track architecture, framing
     comparison, sublayer order, MIT licensing, simulation strategy,
     Hatch packaging, preamble wire format, TLV length encoding, TLV
-    nesting policy, TLV max block size, and the Efficiency Principle.
+    nesting policy, TLV max block size, the Efficiency Principle,
+    six-axis bakeoff methodology, and separate Python/C runtime
+    evidence, the cross-candidate semantic-equivalence contract, and the
+    framing-neutral extensibility taxonomy, coverage strategy, and
+    per-scenario measurement contract, plus complete-encoding wire-
+    overhead, complete-decoder parse-complexity, zero-tolerance legacy-
+    safety, and target-cycle worst-case-latency methodologies.
 
 #### Specifications
 
@@ -50,12 +56,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
     block size with 4096-byte default, three documented forward-
     compatibility paths (α reserved Type, β high-bit Length, γ
     continuation records).
+  - Section 5.1.5 now defines Candidate A's extension body as one
+    schema-delimited section per active sublayer in ascending EX order.
+  - Section 5.3.1 now requires canonical semantic workloads, complete
+    candidate adapters, a paired comparable corpus, and a separate
+    extensibility stress corpus.
+  - Section 5.3's extensibility criterion now uses ADR-0013's semantic
+    scenario families rather than only new-sublayer/new-record examples.
+    Confirmatory scenario selection follows ADR-0014's anchor, boundary,
+    extension-path, and pairwise-coverage rules; measurement follows
+    ADR-0015's quality-gated multidimensional record.
+  - Section 5.3's wire-overhead criterion now follows ADR-0016's
+    complete-encoding octet accounting, with negotiation and physical
+    transport reported separately.
+  - Section 5.3's parse-complexity criterion now follows ADR-0017's
+    complete-decoder cyclomatic and structural inventory, with C and
+    Python reported separately.
+  - Section 5.3's legacy-safety criterion now follows ADR-0018's
+    oracle-labelled malformed, recovery, valid-unknown, negotiation, and
+    fixed-budget fuzzing methodology.
+  - Section 5.3's worst-case-latency criterion now follows ADR-0019's
+    pinned Cortex-M0 intrinsic-cycle and deterministic loaded-response
+    methodology, with empirical bounds distinguished from proven WCET.
   - Section 6 sublayer skeletons now include placeholder Overhead
     Analysis subsections per the Efficiency Principle.
   - Appendix A expanded with TLV wire examples A.5 through A.8
     (single-record, multi-record, rejected reserved Type, rejected
     reserved Length range).
-  - Appendix B tracks resolved vs open questions. Four questions
+  - Appendix A.9 illustrates Candidate A's canonical section order.
+  - Appendix B tracks resolved vs open questions. Five questions
     resolved by this round of ADRs.
 - `specs/I4C-0.0.1-placeholder.md`: placeholder reserving the I4C
   specification namespace.
@@ -65,6 +94,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Package scaffold under `i3cex/` with Hatch build backend, strict
   ruff / strict mypy / pytest+hypothesis tooling, pre-commit
   configuration, and Hatch environment scripts.
+- PyPI distribution metadata and package README links target the public
+  `jemsbhai/i3cex-i4c` repository.
 - Cross-platform pytest runner at `scripts/run_pytest.py` bypassing
   PowerShell quoting issues with marker expressions.
 - Source tree under `src/i3cex/`:
@@ -103,6 +134,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
     default.
   - ADR-0009: Efficiency Principle — every feature must offset its
     cost.
+  - ADR-0010: Six-axis bakeoff evaluation methodology and ADR split.
+  - ADR-0011: Separate Python/C runtime evidence, with C-on-Cortex-M0
+    primary for embedded claims.
+  - ADR-0012: Canonical semantic equivalence, complete candidate
+    adapters, and Candidate A's ordered extension-body contract.
+  - ADR-0013: Framing-neutral extensibility scenario taxonomy with
+    semantic families and orthogonal compatibility/pressure facets.
+  - ADR-0014: Confirmatory extensibility coverage using mandatory family
+    anchors, shared boundary/path inventories, and constrained pairwise
+    facet coverage.
+  - ADR-0015: Per-scenario extensibility measurement bundle covering
+    categorical conformance, specification, Python/C changes,
+    complexity, resources, wire context, and provenance.
+  - ADR-0016: Wire-overhead measurement from actual complete encodings,
+    with stratified corpus, negotiation, fragmentation, and payload-
+    efficiency accounting.
+  - ADR-0017: Parse-complexity measurement using complete receivers,
+    cyclomatic/decision-surplus metrics, and structural parser
+    inventories in separate C and Python evidence streams.
+  - ADR-0018: Legacy-safety measurement using independent oracles,
+    deterministic/exhaustive/stateful corpora, fixed-budget fuzzing, and
+    zero-tolerance severity gates.
+  - ADR-0019: Worst-case latency measurement using a pinned Cortex-M0
+    target, shared slow-path search, deterministic interference-phase
+    sweeps, and separate Python evidence.
   - ADR `README.md` index and `TEMPLATE.md`.
 - CI: `.github/workflows/ci.yml` at the repo root (workflow path-
   filtered to run only on changes under `i3cex/**` or the workflow

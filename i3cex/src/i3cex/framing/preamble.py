@@ -12,6 +12,12 @@ deliberately simple:
     bit 3:     extension-follows flag (0 in v0.1)
     bits 2-0:  reserved (MUST be 0 in v0.1)
 
+This module is the Candidate A *header* codec. A complete bakeoff
+adapter must also parse the ordered sublayer sections in the bytes
+returned after the preamble, per spec section 5.1.5 and ADR-0012. The
+header codec alone must not be timed against the complete TLV-block
+codec as if the operations were semantically equivalent.
+
 The in-memory :class:`Preamble` dataclass is intentionally richer than
 the Option A wire format supports, so that future wire formats
 (Option B 2-byte bitmap, Option C table-indexed) can be added as new
@@ -175,6 +181,9 @@ def decode_option_a(data: bytes) -> tuple[Preamble, bytes]:
     Returns:
         A 2-tuple ``(preamble, remaining)`` where ``preamble`` is the
         decoded :class:`Preamble` and ``remaining`` is ``data[1:]``.
+        For a complete Candidate A extension block, ``remaining``
+        begins with the EX-1 section and follows the canonical section
+        order from spec section 5.1.5.
 
     Raises:
         PreambleDecodeError: If ``data`` is empty, the EX-present flag

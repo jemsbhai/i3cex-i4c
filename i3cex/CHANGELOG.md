@@ -10,6 +10,8 @@ bump the `MINOR` component.
 
 ## [Unreleased]
 
+## [0.1.0.dev0] - 2026-07-17
+
 ### Added
 
 #### Scaffolding
@@ -67,7 +69,36 @@ bump the `MINOR` component.
   No minimum floor.
 - ADR-0009: Efficiency Principle. Every sublayer specification MUST
   include an Overhead Analysis section.
+- ADR-0010: All six framing-comparison axes are evaluated in Paper 1
+  using pre-registered cross-cutting and per-axis methodology ADRs.
+- ADR-0011: Python and C runtime evidence is reported separately;
+  C-on-Cortex-M0 is primary for embedded-runtime claims.
+- ADR-0012: Bakeoff candidates encode and recover one canonical semantic
+  model; Candidate A uses ordered, schema-delimited sublayer sections.
+- ADR-0013: Extensibility scenarios use framing-neutral semantic
+  families with separate compatibility, pressure, negotiation, and
+  evolution-budget facets.
+- ADR-0014: Confirmatory extensibility coverage combines two anchors per
+  family, shared boundary/path inventories, and feasible pairwise facet
+  coverage, with exploratory additions reported separately.
+- ADR-0015: Every extensibility scenario uses a quality-gated,
+  multidimensional standalone-patch record; Python/C and categorical/
+  numeric evidence remain separate, with no weighted composite score.
+- ADR-0016: Wire overhead is measured from complete actual encodings for
+  equal semantics; negotiation, fragmentation, payload efficiency, and
+  physical bus expansion remain separate views.
+- ADR-0017: Parse complexity is measured on complete semantic receivers
+  using cyclomatic and structural inventories, with C and Python kept
+  separate and C primary for embedded claims.
+- ADR-0018: Legacy safety uses oracle-labelled deterministic, exhaustive,
+  stateful, and fixed-budget generated testing with zero tolerance for
+  critical or major violations in C or Python.
+- ADR-0019: Worst-case latency uses complete-decoder intrinsic and loaded
+  measurements on a pinned Cortex-M0 target, with symmetric slow-path
+  search, deterministic phase sweeps, and finite-bound claim discipline.
 - ADR index updated.
+- PyPI distribution metadata and README links now point to the public
+  `jemsbhai/i3cex-i4c` repository.
 
 #### Framing: TLV block encoder/decoder (Candidate B)
 
@@ -106,3 +137,6 @@ bump the `MINOR` component.
   (`Preamble`, `encode_option_a`, `decode_option_a`, error types) and
   the TLV API (`TLVRecord`, `encode_tlv_block`, `decode_tlv_block`,
   error types, and constants).
+- `src/i3cex/framing/preamble.py`: documentation now makes explicit
+  that it is the Candidate A header codec, not a complete semantic
+  bakeoff adapter.
