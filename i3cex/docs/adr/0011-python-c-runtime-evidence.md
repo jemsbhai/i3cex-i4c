@@ -252,6 +252,9 @@ universally faster.
 - [`./0019-worst-case-latency-measurement.md`](./0019-worst-case-latency-measurement.md)
   — pinned target, timing boundary, load profiles, and separate Python
   endpoint for axis 5.
+- [`./0020-throughput-impact-measurement.md`](./0020-throughput-impact-measurement.md)
+  — separate C/Python endpoint-capacity and system-goodput evidence for
+  axis 6.
 - [`./0002-framing-comparative-prototyping.md`](./0002-framing-comparative-prototyping.md)
   — parent decision to implement and compare both framing strategies.
 - [`./0009-efficiency-principle.md`](./0009-efficiency-principle.md)

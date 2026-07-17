@@ -482,8 +482,10 @@ and reported in Paper 1:
    cycles and loaded response cycles measured per ADR-0019 on the pinned
    Cortex-M0 target, with finite observed bounds distinguished from
    formally proven WCET and Python reported separately.
-6. **Throughput impact**: Effective payload bandwidth given envelope
-   overhead.
+6. **Throughput impact**: Exact wire goodput, complete Cortex-M0
+   encoder/decoder capacity, and sustainable lossless combined-pipeline
+   goodput measured per ADR-0020, with Python reported separately and
+   the limiting stage identified for every stratum.
 
 Both strategies will be implemented; the loser will be documented in
 an ADR and in Paper 1 as a negative result.
@@ -647,6 +649,16 @@ Detailed bit-level layout: `[TBD, pending framing decision]`.
 - ADR-0007 — TLV nesting deferred.
 - ADR-0008 — TLV maximum block size.
 - ADR-0009 — Efficiency Principle.
+- ADR-0010 — six-axis bakeoff methodology framework.
+- ADR-0011 — separate Python/C runtime evidence streams.
+- ADR-0012 — semantic equivalence and complete candidate adapters.
+- ADR-0013 through ADR-0015 — extensibility taxonomy, coverage, and
+  per-scenario measurements.
+- ADR-0016 — complete-encoding wire-overhead measurement.
+- ADR-0017 — complete-decoder parse-complexity measurement.
+- ADR-0018 — oracle-driven legacy-safety measurement.
+- ADR-0019 — worst-case latency measurement.
+- ADR-0020 — throughput-impact measurement.
 
 ---
 

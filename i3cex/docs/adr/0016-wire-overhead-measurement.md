@@ -450,5 +450,8 @@ without re-running the encoders.
   — per-scenario wire context and categorical handling.
 - [`./0019-worst-case-latency-measurement.md`](./0019-worst-case-latency-measurement.md)
   — separate CPU-latency and secondary end-to-end timing views.
+- [`./0020-throughput-impact-measurement.md`](./0020-throughput-impact-measurement.md)
+  — physical-bit reconciliation and effective-payload goodput derived
+  from this ADR's complete encodings.
 - `../../../specs/I3CEX-0.1.0-draft.md` section 5.3 — wire-overhead
   comparison criterion.
