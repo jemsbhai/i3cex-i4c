@@ -62,7 +62,26 @@ hatch run typecheck
 
 # Run all quality checks
 hatch run check
+
+# Show evidence-backed release readiness (currently NO-GO for hardware)
+hatch run release-status
+
+# Reproduce, audit, and smoke-test the release artifacts
+hatch run release-artifacts --allow-dirty
 ```
+
+### Hardware and production readiness
+
+Passing the Python tests does not by itself establish I3C hardware or
+production readiness. The staged release train, compatible reference-board
+matrix, firmware/cosimulation requirements, physical test procedures, and
+machine-checkable gates are defined in
+[`docs/release/RELEASE_PLAN.md`](./docs/release/RELEASE_PLAN.md).
+
+Use `hatch run release-status --require dev`, `--require rc`, or
+`--require production` to enforce a milestone. Hardware and production
+milestones intentionally fail until their retained evidence is linked from
+the release manifest.
 
 ### Project Structure
 

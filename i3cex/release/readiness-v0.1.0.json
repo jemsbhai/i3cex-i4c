@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "updated": "2026-07-17",
+  "decision": "NO-GO",
+  "decision_reason": "Host framing codecs pass their current tests, but the specification, conformance corpus, C implementation, RTL cosimulation, physical I3C validation, and production evidence are incomplete.",
+  "release": {
+    "development": "0.1.0.dev1",
+    "hardware_candidate": "0.1.0rc1",
+    "hardware_validated": "0.1.0",
+    "production": "1.0.0"
+  },
+  "hardware": [
+    {
+      "id": "programmable-i3c-pair",
+      "model": "NUCLEO-H563ZI",
+      "quantity": 2,
+      "role": "one I3C controller and one I3C target",
+      "required_for": ["rc", "production"],
+      "availability": "needed",
+      "evidence": []
+    },
+    {
+      "id": "third-party-i3c-target",
+      "model": "NUCLEO-H503RB plus X-NUCLEO-IKS01A3",
+      "quantity": 1,
+      "role": "commercial-sensor interoperability lane",
+      "required_for": ["rc", "production"],
+      "availability": "needed",
+      "evidence": []
+    },
+    {
+      "id": "cortex-m0-benchmark",
+      "model": "NUCLEO-F072RB",
+      "quantity": 1,
+      "role": "pinned Cortex-M0 latency and throughput benchmark only",
+      "required_for": ["rc", "production"],
+      "availability": "needed",
+      "evidence": []
+    },
+    {
+      "id": "bus-instrumentation",
+      "model": "calibrated oscilloscope or logic analyzer suitable for 12.5 MHz I3C",
+      "quantity": 1,
+      "role": "electrical timing and retained protocol traces",
+      "required_for": ["rc", "production"],
+      "availability": "needed",
+      "evidence": []
+    },
+    {
+      "id": "power-cycle-fixture",
+      "model": "scriptable USB power switch or relay fixture",
+      "quantity": 1,
+      "role": "repeatable cold-boot, brownout, and recovery testing",
+      "required_for": ["production"],
+      "availability": "needed",
+      "evidence": []
+    }
+  ],
+  "gates": [
+    {
+      "id": "G00",
+      "name": "Release plan and machine-readable gate manifest",
+      "status": "passed",
+      "required_for": ["dev", "rc", "production"],
+      "evidence": ["docs/release/RELEASE_PLAN.md"],
+      "blockers": []
+    },
+    {
+      "id": "G01",
+      "name": "Host reference quality gate",
+      "status": "passed",
+      "required_for": ["dev", "rc", "production"],
+      "evidence": [
+        "https://github.com/jemsbhai/i3cex-i4c/actions/runs/29614745610"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "G02",
+      "name": "Reproducible development artifacts and isolated install smoke tests",
+      "status": "passed",
+      "required_for": ["dev", "rc", "production"],
+      "evidence": [
+        "https://github.com/jemsbhai/i3cex-i4c/actions/runs/29614745610"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "G03",
+      "name": "Specification freeze and framing selection",
+      "status": "blocked",
+      "required_for": ["rc", "production"],
+      "evidence": [],
+      "blockers": [
+        "The framing bakeoff has not selected one production format.",
+        "The draft contains unresolved normative TBD markers, including CCC allocation and EX-1 through EX-6 layouts."
+      ]
+    },
+    {
+      "id": "G04",
+      "name": "Independent normative conformance vectors",
+      "status": "blocked",
+      "required_for": ["rc", "production"],
+      "evidence": [],
+      "blockers": [
+        "No normative JSON vectors or vector runner exist."
+      ]
+    },
+    {
+      "id": "G05",
+      "name": "Python integration simulator and mixed-bus scenarios",
+      "status": "blocked",
+      "required_for": ["rc", "production"],
+      "evidence": [],
+      "blockers": [
+        "The simulator and integration-test directories contain only package skeletons."
+      ]
+    },
+    {
+      "id": "G06",
+      "name": "C reference implementation and Python/C differential conformance",
+      "status": "blocked",
+      "required_for": ["rc", "production"],
+      "evidence": [],
+      "blockers": [
+        "No allocation-free C codec, host sanitizer harness, Cortex-M build, or differential runner exists."
+      ]
+    },
+    {
+      "id": "G07",
+      "name": "Pinned RTL cosimulation",
+      "status": "blocked",
+      "required_for": ["rc", "production"],
+      "evidence": [],
+      "blockers": [
+        "The cosimulation job is disabled and no cocotb testbench is implemented.",
+        "Verilator, Icarus Verilog, and Verible are not installed in the available WSL environment."
+      ]
+    },
+    {
+      "id": "G08",
+      "name": "Physical I3C controller-target and sensor interoperability",
+      "status": "blocked",
+      "required_for": ["rc", "production"],
+      "evidence": [],
+      "blockers": [
+        "No compatible I3C board, ST-LINK device, bus instrument, or hardware harness is connected."
+      ]
+    },
+    {
+      "id": "G09",
+      "name": "Cortex-M0 performance bakeoff evidence",
+      "status": "blocked",
+      "required_for": ["rc", "production"],
+      "evidence": [],
+      "blockers": [
+        "The pinned board and Arm GNU 13.3.Rel1 toolchain are unavailable.",
+        "The candidate C firmware and ADR-0019/ADR-0020 measurement harnesses do not exist."
+      ]
+    },
+    {
+      "id": "G10",
+      "name": "Robustness, fuzzing, memory-safety, and recovery qualification",
+      "status": "blocked",
+      "required_for": ["rc", "production"],
+      "evidence": [],
+      "blockers": [
+        "C sanitizer/fuzzer targets and target watchdog, stack-watermark, and malformed-stream campaigns are not implemented."
+      ]
+    },
+    {
+      "id": "G11",
+      "name": "Release supply chain, SBOM, provenance, signing, and rollback artifacts",
+      "status": "pending",
+      "required_for": ["rc", "production"],
+      "evidence": [],
+      "blockers": []
+    },
+    {
+      "id": "G12",
+      "name": "User, compatibility, support, and known-limitations documentation",
+      "status": "pending",
+      "required_for": ["rc", "production"],
+      "evidence": [],
+      "blockers": []
+    },
+    {
+      "id": "G13",
+      "name": "Independent review and release-candidate soak",
+      "status": "pending",
+      "required_for": ["production"],
+      "evidence": [],
+      "blockers": []
+    }
+  ]
+}

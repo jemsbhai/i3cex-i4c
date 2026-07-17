@@ -65,6 +65,9 @@ jobs:
       - name: Type-check
         run: hatch run typecheck
 
+      - name: Validate release readiness manifest
+        run: hatch run release-status
+
   # --------------------------------------------------------------------
   # Unit + property + integration tests across OS and Python matrix.
   # Cosim is deliberately excluded; it runs in a separate job on Linux.
@@ -157,8 +160,8 @@ jobs:
       - name: Install Hatch
         run: pipx install hatch
 
-      - name: Build sdist and wheel
-        run: hatch build
+      - name: Validate reproducible sdist and wheel
+        run: hatch run release-artifacts --output dist
 
       - name: Upload artefacts
         uses: actions/upload-artifact@v6
